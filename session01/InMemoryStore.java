@@ -12,9 +12,23 @@ public class InMemoryStore implements SensorDataHandler{
         }
         readings.add(reading);
     }
+    
     @Override
     public void close(){
+        System.out.println("InMemory "+ readings.size()+" Readings gespeichert");
+        if(readings.isEmpty()){
+            System.out.println("Keine Daten");
+            return;
+        }
+        double min = readings.get(0).getTemp();
+        double max = readings.get(0).getTemp();
 
+        for(Sensorreading r :readings){
+            if(r.getTemp()<min) min=r.getTemp();
+            if(r.getTemp()>max) max=r.getTemp();
+        }
+        System.out.println("Maximale Temperatur " +max+"°C");
+        System.out.println("Minimale Temperatur "+min+"°C");
     }
     
 }

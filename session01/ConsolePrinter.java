@@ -13,6 +13,7 @@ public class ConsolePrinter implements SensorDataHandler{
         return;
 
     }
+    
     @Override
     public void close(){
         System.out.println("── ConsolePrinter: " + count + " Readings ausgegeben ──");

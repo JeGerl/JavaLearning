@@ -1,5 +1,5 @@
 public interface SensorDataHandler {
-    public void handle();
+    public void handle(Sensorreading reading);
     public void close();
     
 }
