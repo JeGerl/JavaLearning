@@ -1,3 +1,4 @@
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -31,8 +32,28 @@ public class Main{
         System.out.println();
 
 
-    }
+        List<Describable> things = new ArrayList<>();
+        things.add(new Sensorreading(1, "S1", 19.3, 64.2));
+        things.add(new Station("Nord", "Freiburg"));
+        things.add(new Sensorreading(2, "S2", 22.1, 61.0));
+        things.add(new Station("Süd", "Basel"));
+        things.add(new Sensor("TEMP-01", "°C"));   // neue Klasse — for-each unverändert
+        things.add(new Sensor("HUM-01",  "%rH"));
 
+        for (Describable d : things) {
+            System.out.println(d.describe());
+        }
+
+    }
+    public static void processAll(List<Order> orders,
+                                  PaymentProcessor processor) {
+        for (Order o : orders) {
+            boolean success = processor.process(o);
+            if (!success) {
+                System.err.println("Zahlung fehlgeschlagen: " + o);
+            }
+        }
+    }
     public static void processAll(List<Sensorreading> readings, SensorDataHandler handler){
         for (Sensorreading r:readings){
             handler.handle(r);

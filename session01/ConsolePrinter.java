@@ -1,3 +1,4 @@
+
 public class ConsolePrinter implements SensorDataHandler{
 
     private int count=0;
