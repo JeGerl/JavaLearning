@@ -1,11 +1,15 @@
 
 import java.util.List;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.Writer;
 
 public class Main{
     
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Describable d1 = new Sensorreading(1,"S1",19.4,64.3);
         Describable d2 = new Station("Nord", "Freiburg");
 
@@ -22,7 +26,7 @@ public class Main{
         // ── ConsolePrinter ────────────────────────────────────────────────
         System.out.println("=== ConsolePrinter ===");
         processAll(data, new ConsolePrinter());
-
+        processAll(data, new CsvWriter("sensor_data.csv"));
         System.out.println();
 
         // ── InMemoryStore ─────────────────────────────────────────────────
@@ -43,6 +47,20 @@ public class Main{
         for (Describable d : things) {
             System.out.println(d.describe());
         }
+
+        System.out.println("═══ MultiHandler ═══");
+        MultiHandler multi = new MultiHandler();
+        multi.add(new ConsolePrinter());
+        multi.add(new CsvWriter("sensor_data_multi.csv"));
+
+        processAll(data, multi);   // eine Zeile — beide Handler laufen
+        System.out.println("sensor_data_multi.csv geschrieben.");
+        System.out.println();
+
+
+        //___________________________________________Summary Printer____________
+
+        processAll(data,new SummaryPrinter());
 
     }
     public static void processAll(List<Order> orders,
